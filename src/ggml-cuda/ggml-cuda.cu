@@ -40,6 +40,11 @@
 #include "ggml-cuda/gla.cuh"
 #include "ggml.h"
 
+#if defined(GGML_USE_HIP_HSA)
+#include "hsa/hsa.h"
+#include "hsa/hsa_ext_amd.h"
+#endif
+
 #include <algorithm>
 #include <array>
 #include <atomic>
@@ -115,7 +120,16 @@ static cudaError_t ggml_cuda_device_malloc(void ** ptr, size_t size, int device)
     }
     return err;
 #else
-    return cudaMalloc(ptr, size);
+    cudaError_t hip_ret = cudaMalloc(ptr, size);
+
+#if defined(GGML_USE_HIP_HSA)
+    int dmabuf_fd;
+    uint64_t offset;
+    hsa_status_t status =
+        hsa_amd_portable_export_dmabuf(ptr, size, &dmabuf_fd, &offset);
+#endif
+
+    return hip_ret;
 #endif // !defined(GGML_USE_HIP)
 
 #endif

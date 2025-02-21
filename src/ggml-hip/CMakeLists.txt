@@ -118,4 +118,11 @@ if (GGML_STATIC)
     message(FATAL_ERROR "Static linking not supported for HIP/ROCm")
 endif()
 
+if (GGML_HIP_HSA)
+  add_compile_definitions(GGML_USE_HIP_HSA)
+  message(STATUS "Linking against HSA")
+  find_package(hsa-runtime64 REQUIRED)
+  find_package(hsakmt REQUIRED)
+endif()
+
 target_link_libraries(ggml-hip PRIVATE ggml-base hip::host roc::rocblas roc::hipblas)

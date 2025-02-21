@@ -157,6 +157,7 @@ option(GGML_HIP                             "ggml: use HIP"                     
 option(GGML_HIP_GRAPHS                      "ggml: use HIP graph, experimental, slow"         OFF)
 option(GGML_HIP_NO_VMM                      "ggml: do not try to use HIP VMM"                 ON)
 option(GGML_HIP_UMA                         "ggml: use HIP unified memory architecture"       OFF)
+option(GGML_HIP_HSA                         "ggml: Link against the HSA interface"            OFF)
 option(GGML_VULKAN                          "ggml: use Vulkan"                                OFF)
 option(GGML_VULKAN_CHECK_RESULTS            "ggml: run Vulkan op checks"                      OFF)
 option(GGML_VULKAN_DEBUG                    "ggml: enable Vulkan debug output"                OFF)
